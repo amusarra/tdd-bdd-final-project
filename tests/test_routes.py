@@ -212,6 +212,14 @@ class TestProductRoutes(TestCase):
         new_count = self.get_product_count()
         self.assertEqual(new_count, product_count - 1)
 
+    def test_delete_product_405(self):
+        """It should Delete a Product HTTP/405"""
+        products = self._create_products(5)
+        product_count = self.get_product_count()
+        test_product = products[0]
+        response = self.client.post(f"{BASE_URL}/{test_product.id}")
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
     def test_get_product_list(self):
         """It should Get a list of Products"""
         self._create_products(5)
